@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Primera configuración de la cuenta administradora de esta instalación. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar administrador | INCAS</title>
+    <link rel="stylesheet" href="CSS/index.css">
+    <link rel="icon" href="resourses/logos/INCAS_logo.png">
+</head>
+<body>
+    <main class="container">
+        <img src="resourses/logos/INCAS_logo.png" alt="INCAS" class="logo_INCAS">
+        <h1>Primer administrador</h1>
+        <p class="setup-description">Este formulario solo está disponible mientras no exista un administrador registrado.</p>
+
+        <form class="login-form" id="admin-setup-form">
+            <div class="input-group">
+                <label for="admin-name">Nombre</label>
+                <input id="admin-name" name="nombre" autocomplete="given-name" maxlength="50" required>
+            </div>
+            <div class="input-group">
+                <label for="admin-surname">Apellido</label>
+                <input id="admin-surname" name="apellido" autocomplete="family-name" maxlength="50" required>
+            </div>
+            <div class="input-group">
+                <label for="admin-dui">DUI</label>
+                <input id="admin-dui" name="dui" inputmode="numeric" maxlength="10" pattern="[0-9]{8}-?[0-9]" placeholder="00000000-0" required>
+            </div>
+            <div class="input-group">
+                <label for="admin-email">Correo electrónico</label>
+                <input id="admin-email" name="correo" type="email" autocomplete="email" maxlength="100" required>
+            </div>
+            <div class="input-group">
+                <label for="admin-pin">PIN (6 a 12 dígitos)</label>
+                <input id="admin-pin" name="pin" type="password" inputmode="numeric" autocomplete="new-password" pattern="[0-9]{6,12}" minlength="6" maxlength="12" required>
+            </div>
+            <div class="input-group">
+                <label for="admin-pin-confirm">Confirmar PIN</label>
+                <input id="admin-pin-confirm" name="confirmar_pin" type="password" inputmode="numeric" autocomplete="new-password" pattern="[0-9]{6,12}" minlength="6" maxlength="12" required>
+            </div>
+            <button class="login-button" type="submit">Crear administrador</button>
+            <p id="admin-setup-status" class="login-status" role="status" aria-live="polite"></p>
+            <a class="admin-setup-link" href="index.html">Volver al inicio de sesión</a>
+        </form>
+    </main>
+    <script src="JS/configurar_admin.js"></script>
+</body>
+</html>
