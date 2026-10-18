@@ -16,8 +16,11 @@
             <img src="resourses/logos/INCAS_logo.png" alt="Logo de INCAS" class="brand-incas">
             <img src="resourses/logos/MINED_logo.jpg" alt="Logo del Ministerio de Educación" class="brand-mined">
         </a>
-        <h1>Portal Administrador</h1>
-        <button class="logout-button admin-logout" id="admin-logout" type="button">Salir</button>
+        <div class="topbar-heading">
+            <h1>Portal Administrador</h1>
+            <span id="usuario-login" class="user-display"></span>
+        </div>
+        <button class="logout-button admin-logout" id="admin-logout" type="button" onclick="cerrarSesion()">Salir</button>
     </header>
 
     <!-- Navegación lateral y vistas del panel administrativo. -->
@@ -37,11 +40,11 @@
             </button>
         </nav>
 
-        <!-- Las vistas administrativas muestran y crean únicamente registros reales. -->
+        <!-- Vistas de la interfaz administrativa. -->
         <main class="main-content">
             <section class="content-view" id="view-docentes" aria-labelledby="title-docentes" hidden>
                 <h2 id="title-docentes">Docentes</h2>
-                <p class="admin-intro">Registra el perfil y entrega al docente su PIN temporal. Las asignaciones a materias se realizarán después.</p>
+                <p class="admin-intro">Vista de demostración para el registro de docentes.</p>
                 <div class="section-rule" aria-hidden="true"></div>
                 <form class="admin-card teacher-create-form" id="teacher-create-form">
                     <h3>Crear perfil docente</h3>
@@ -79,28 +82,33 @@
 
             <section class="content-view" id="view-encargados" aria-labelledby="title-encargados" hidden>
                 <h2 id="title-encargados">Encargados</h2>
-                <p class="admin-intro">Si un encargado perdió su PIN, genera uno temporal nuevo y entrégaselo directamente. El PIN anterior dejará de funcionar.</p>
+                <p class="admin-intro">Vista de demostración para la administración de encargados.</p>
                 <div class="section-rule" aria-hidden="true"></div>
                 <div class="admin-list" id="guardians-list" aria-live="polite"></div>
             </section>
 
             <section class="content-view" id="view-secciones" aria-labelledby="title-secciones" hidden>
                 <h2 id="title-secciones">Secciones</h2>
-                <p class="admin-intro">Asigna o cambia el docente guía de cada sección. Solo aparecen docentes activos.</p>
+                <p class="admin-intro">Vista de demostración para la administración de secciones.</p>
                 <div class="section-rule" aria-hidden="true"></div>
                 <div class="admin-list" id="sections-list" aria-live="polite"></div>
             </section>
 
             <section class="content-view active" id="view-solicitudes" aria-labelledby="title-solicitudes">
                 <h2 id="title-solicitudes">Solicitudes de matrícula</h2>
-                <p class="admin-intro">Revisa los datos y documentos. Al aprobar, asigna el NIE y una sección existente.</p>
+                <p class="admin-intro">Vista de demostración para revisar solicitudes.</p>
                 <div class="section-rule" aria-hidden="true"></div>
-                <p class="admin-status" id="admin-status" role="status" aria-live="polite">Cargando información...</p>
+                <p class="admin-status" id="admin-status" role="status" aria-live="polite">La información aparecerá en esta sección.</p>
                 <div class="admin-list" id="applications-list"></div>
             </section>
         </main>
     </div>
 
-    <script src="JS/panel_admin.js?v=4"></script>
+    <script src="JS/auth.js"></script>
+    <script>
+        // Verifica la sesión antes de cargar la interfaz
+        verificarSesion('Administrador');
+    </script>
+    <script src="JS/portal_navigation.js"></script>
 </body>
 </html>

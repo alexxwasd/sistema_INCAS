@@ -71,8 +71,7 @@ h1 {
     margin: 0 auto;
 }
 
-.login-status,
-.admin-setup-link {
+.login-status {
     display: block;
     margin-top: 12px;
     color: #315642;
@@ -91,18 +90,6 @@ h1 {
 
 .login-status.success {
     color: #176b39;
-}
-
-.setup-description {
-    margin: 0 auto 20px;
-    color: #315642;
-    line-height: 1.5;
-    text-align: center;
-}
-
-.admin-setup-link {
-    color: #176b39;
-    font-weight: 600;
 }
 
 .input-group + .input-group {

@@ -1,2 +1,0 @@
-## Impide que el servidor web entregue directamente el archivo de configuración.
-Require all denied

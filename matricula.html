@@ -16,7 +16,7 @@
             <img src="resourses/logos/INCAS_logo.png" alt="Logo de INCAS">
             <div>
                 <h1>Solicitud de matrícula</h1>
-                <p>Completa los pasos para enviar la solicitud de matrícula.</p>
+                <p>Completa los pasos para revisar el formulario de matrícula.</p>
             </div>
         </header>
 
@@ -31,7 +31,7 @@
          </div>
 
          <!-- formulario -->
-          <!-- FormData envía estos campos y los archivos al endpoint PHP de matrícula. -->
+          <!-- El formulario permite capturar y revisar la información localmente. -->
           <form class="form">
 
             <!-- Paso 1 -->
@@ -81,7 +81,7 @@
                 <label>
                     Especialidad
                     <select name="id_especialidad" id="especialidad" disabled>
-                        <option value="">Cargando especialidades...</option>
+                        <option value="">Lista no configurada</option>
                     </select>
                 </label>
 
@@ -132,7 +132,7 @@
                         <input type="tel" name="telefono_rep" autocomplete="tel" inputmode="tel" maxlength="16" pattern="\+?[0-9]{7,15}" title="Ingrese un número de 7 a 15 dígitos; puede iniciar con +." placeholder="Ingrese el número del encargado" required />
                     </label>
 
-                    <p class="form-note full-width">Si el DUI ya está registrado, sus datos podrán reutilizarse cuando se implemente esa consulta en el servidor.</p>
+                    <p class="form-note full-width">Este formulario es una vista de demostración y no envía la información.</p>
 
                     <div class="buttons">
                         <button type="button" class="btn-prev">Anterior</button>
@@ -141,7 +141,7 @@
 
                 </section>
 
-                <!-- Paso 3: resumen, confirmación expresa y respuesta del servidor. -->
+                <!-- Paso 3: resumen y confirmación de los datos ingresados. -->
                 <section class="form-step">
                         <h2>Confirmación</h2>
                     <p>Revise la información ingresada antes de enviar la solicitud.</p>

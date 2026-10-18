@@ -9,15 +9,18 @@
     <link rel="stylesheet" href="CSS/panel_alumno.css">
     <link rel="icon" href="resourses/logos/INCAS_logo.png">
 </head>
-<body data-required-role="alumno">
+<body>
     <!-- Barra superior del portal con marca institucional y salida. -->
     <header class="topbar">
         <a class="brand" href="index.html" aria-label="INCAS, ir al inicio">
             <img src="resourses/logos/INCAS_logo.png" alt="Logo de INCAS" class="brand-incas">
             <img src="resourses/logos/MINED_logo.jpg" alt="Logo del Ministerio de Educación" class="brand-mined">
         </a>
-        <h1>Portal Estudiante</h1>
-        <button class="logout-button" type="button" data-logout>Salir</button>
+        <div class="topbar-heading">
+            <h1>Portal Estudiante</h1>
+            <span id="usuario-login" class="user-display"></span>
+        </div>
+        <button class="logout-button admin-logout" id="admin-logout" type="button" onclick="cerrarSesion()">Salir</button>
     </header>
 
     <!-- Menú de vistas personales y área principal del estudiante. -->
@@ -31,7 +34,7 @@
             </button>
         </nav>
 
-        <!-- Los campos se rellenarán cuando exista una API autenticada del alumno. -->
+        <!-- Campos informativos de la interfaz del alumno. -->
         <main class="main-content">
             <section class="content-view active" id="view-informacion" aria-labelledby="title-informacion">
                 <div class="page-heading">
@@ -46,29 +49,29 @@
                     <dl class="personal-grid">
                         <div class="data-item">
                             <dt>Nombre</dt>
-                            <dd data-student-field="nombre">Se mostrará al conectar la base de datos.</dd>
+                            <dd data-student-field="nombre">Información no disponible todavía.</dd>
                         </div>
                         <div class="data-item">
                             <dt>Apellido</dt>
-                            <dd data-student-field="apellido">Se mostrará al conectar la base de datos.</dd>
+                            <dd data-student-field="apellido">Información no disponible todavía.</dd>
                         </div>
                         <div class="data-item">
                             <dt>Sección</dt>
-                            <dd data-student-field="seccion">Se mostrará al conectar la base de datos.</dd>
+                            <dd data-student-field="seccion">Información no disponible todavía.</dd>
                         </div>
                         <div class="data-item">
                             <dt>Correo estudiantil</dt>
-                            <dd data-student-field="correo">Se mostrará al conectar la base de datos.</dd>
+                            <dd data-student-field="correo">Información no disponible todavía.</dd>
                         </div>
                         <div class="data-item">
                             <dt>Teléfono</dt>
-                            <dd data-student-field="telefono">Se mostrará al conectar la base de datos.</dd>
+                            <dd data-student-field="telefono">Información no disponible todavía.</dd>
                         </div>
                     </dl>
                 </div>
             </section>
 
-            <!-- Las notas se mostrarán solo para períodos cerrados mediante el backend. -->
+            <!-- Tabla visual de notas. -->
             <section class="content-view" id="view-notas" aria-labelledby="title-notas" hidden>
                 <div class="page-heading">
                     <div>
@@ -97,7 +100,7 @@
                             <tbody id="grades-body">
                                 <tr>
                                     <td class="empty-cell" colspan="2">
-                                        Las notas se mostrarán cuando haya períodos finalizados y los datos estén disponibles.
+                                        Las notas aparecerán aquí cuando haya información disponible.
                                     </td>
                                 </tr>
                             </tbody>
@@ -108,7 +111,11 @@
         </main>
     </div>
 
-    <script src="JS/session.js"></script>
-    <script src="JS/panel_alumno.js"></script>
+    <script src="JS/auth.js"></script>
+    <script>
+        // Verifica la sesión antes de cargar la interfaz
+        verificarSesion('Alumno');
+    </script>
+    <script src="JS/portal_navigation.js"></script>
 </body>
 </html>

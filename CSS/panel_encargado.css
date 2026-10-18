@@ -36,7 +36,7 @@ body {
     z-index: 1;
     min-height: 82px;
     display: grid;
-    grid-template-columns: minmax(190px, 1fr) auto minmax(190px, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     gap: 20px;
     padding: 12px 28px;
@@ -67,12 +67,25 @@ body {
     background: #fff;
 }
 
+.topbar-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    min-width: 0;
+}
+
 .topbar h1 {
     color: #fff;
     font-size: clamp(20px, 2.4vw, 27px);
     font-weight: 650;
     letter-spacing: 0.01em;
     text-align: center;
+}
+
+.user-display {
+    overflow-wrap: anywhere;
+    font-size: 14px;
 }
 
 .logout-button,
@@ -95,6 +108,7 @@ body {
 }
 
 .logout-button {
+    grid-column: 3;
     justify-self: end;
     min-width: 76px;
 }
@@ -432,15 +446,27 @@ select:focus-visible {
         height: 40px;
     }
 
-    .topbar h1 {
-        grid-column: 1 / -1;
+    .topbar-heading {
+        grid-column: 1;
         grid-row: 2;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+
+    .topbar h1 {
         padding: 2px 0 4px;
+        font-size: clamp(18px, 5vw, 22px);
+        text-align: left;
+    }
+
+    .user-display {
+        font-size: 12px;
     }
 
     .logout-button {
         grid-column: 2;
-        grid-row: 1;
+        grid-row: 2;
     }
 
     .guardian-layout {

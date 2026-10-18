@@ -1,76 +1,49 @@
-// Elementos de autenticación de las cuentas y enlace al registro inicial de administrador.
 const loginForm = document.querySelector("#admin-login-form");
 const loginStatus = document.querySelector("#login-status");
-const setupLink = document.querySelector("#admin-setup-link");
-const roleSelect = document.querySelector("#login-role");
-const identifierInput = document.querySelector("#username");
-const identifierLabel = document.querySelector("#login-identifier-label");
 
-const roleLoginFields = {
-    administrador: { label: "Correo del administrador", type: "email", placeholder: "Ingrese su correo" },
-    alumno: { label: "Correo institucional del alumno", type: "email", placeholder: "alumno@instituto.edu.sv" },
-    encargado: { label: "DUI del encargado", type: "text", placeholder: "00000000-0" },
-    docente: { label: "Correo del docente", type: "email", placeholder: "Ingrese su correo" }
-};
+if (loginForm) {
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-// Cambia el tipo de identificador según la cuenta que intenta iniciar sesión.
-function updateLoginIdentifier() {
-    const fields = roleLoginFields[roleSelect.value];
-    identifierLabel.textContent = fields.label;
-    identifierInput.type = fields.type;
-    identifierInput.placeholder = fields.placeholder;
-    identifierInput.inputMode = roleSelect.value === "encargado" ? "numeric" : "email";
+        // Estado inicial de carga
+        loginStatus.className = "login-status";
+        loginStatus.textContent = "Verificando credenciales...";
+
+        // Empaquetar los datos ingresados
+        const formData = new FormData(loginForm);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            // Enviar petición al servidor backend en Node.js
+            const response = await fetch('http://localhost:3000/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                loginStatus.className = "login-status success";
+                loginStatus.textContent = result.mensaje;
+
+                // Guardar datos de sesión del usuario en el navegador
+                if (result.usuario) {
+                    localStorage.setItem("usuarioSesion", JSON.stringify(result.usuario));
+                }
+
+                // Redirigir a su panel correspondiente tras 1 segundo
+                setTimeout(() => {
+                    window.location.href = result.redirectUrl;
+                }, 1000);
+            } else {
+                loginStatus.className = "login-status error";
+                loginStatus.textContent = result.error;
+            }
+        } catch (error) {
+            console.error("Error al conectar:", error);
+            loginStatus.className = "login-status error";
+            loginStatus.textContent = "Error al conectar con el servidor backend. Asegúrate de encender Node.js.";
+        }
+    });
 }
-
-// Consulta si ya existe un administrador y si hay una sesión activa.
-async function checkAdminSession() {
-    try {
-        const response = await fetch("api/admin_session.php", {
-            headers: { Accept: "application/json" }
-        });
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.error || "No se pudo comprobar la sesión.");
-        }
-
-        setupLink.hidden = !result.setupRequired;
-        if (result.authenticated) {
-            window.location.replace(result.redirect);
-        }
-    } catch (error) {
-        loginStatus.classList.add("error");
-        loginStatus.textContent = error.message || "No se pudo conectar con el servidor.";
-    }
-}
-
-// Envía el rol, su identificador y PIN; PHP verifica la cuenta y crea la sesión.
-loginForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    loginStatus.className = "login-status";
-    loginStatus.textContent = "Verificando acceso...";
-
-    try {
-        const response = await fetch("api/admin_session.php", {
-            method: "POST",
-            body: new FormData(loginForm),
-            headers: { Accept: "application/json" }
-        });
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.error || "No se pudo iniciar sesión.");
-        }
-
-        loginStatus.classList.add("success");
-        loginStatus.textContent = "Acceso correcto. Abriendo el panel...";
-        window.location.assign(result.redirect);
-    } catch (error) {
-        loginStatus.classList.add("error");
-        loginStatus.textContent = error.message || "No se pudo conectar con el servidor.";
-    }
-});
-
-roleSelect.addEventListener("change", updateLoginIdentifier);
-updateLoginIdentifier();
-checkAdminSession();
