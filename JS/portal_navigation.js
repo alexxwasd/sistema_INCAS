@@ -36,6 +36,10 @@ document.querySelectorAll("[data-logout]").forEach((button) => {
 
 document.querySelectorAll("form").forEach((form) => {
     form.addEventListener("submit", (event) => {
+        if (form.matches("[data-api-form]")) {
+            return;
+        }
+
         event.preventDefault();
         const status = form.querySelector("[role='status']");
         if (status) {

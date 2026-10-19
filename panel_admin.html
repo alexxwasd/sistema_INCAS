@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0f172a">
     <title>Portal administrador | INCAS</title>
-    <link rel="stylesheet" href="CSS/panel_admin.css?v=3">
+    <link rel="stylesheet" href="CSS/panel_admin.css?v=4">
     <link rel="icon" href="resourses/logos/INCAS_logo.png">
 </head>
 <body>
@@ -44,9 +44,8 @@
         <main class="main-content">
             <section class="content-view" id="view-docentes" aria-labelledby="title-docentes" hidden>
                 <h2 id="title-docentes">Docentes</h2>
-                <p class="admin-intro">Vista de demostración para el registro de docentes.</p>
                 <div class="section-rule" aria-hidden="true"></div>
-                <form class="admin-card teacher-create-form" id="teacher-create-form">
+                <form class="admin-card teacher-create-form" id="teacher-create-form" data-api-form>
                     <h3>Crear perfil docente</h3>
                     <div class="teacher-form-fields">
                         <label>
@@ -62,44 +61,137 @@
                             <input name="apellido" autocomplete="family-name" maxlength="50" required>
                         </label>
                         <label>
-                            Correo electrónico
+                            Correo electrónico (identificador)
                             <input name="correo" type="email" autocomplete="email" maxlength="100" required>
                         </label>
                         <label>
-                            Teléfono (opcional)
-                            <input name="telefono" type="tel" inputmode="tel" maxlength="15" pattern="\+?[0-9]{7,15}">
+                            Teléfono
+                            <input type="text" id="input-telefono" name="telefono" placeholder="0000-0000" maxlength="20">
                         </label>
                         <label>
-                            Dirección (opcional)
-                            <input name="direccion" maxlength="150">
+                            Fecha de nacimiento
+                            <input type="date" id="input-fecha-nac" name="fecha_nac">
+                        </label>
+                        <label>
+                            Dirección
+                            <input type="text" id="input-direccion" name="direccion" placeholder="Dirección de residencia" maxlength="255">
+                        </label>
+                        <label>
+                            Especialidad
+                            <select id="select-especialidad" name="id_especialidad" required>
+                                <!-- Las opciones se cargan dinámicamente -->
+                            </select>
                         </label>
                     </div>
                     <button class="teacher-create-button" type="submit">Crear docente</button>
+                    <p class="initial-password-note">La clave inicial del docente será su DUI.</p>
                     <p class="teacher-create-status" id="teacher-create-status" role="status" aria-live="polite"></p>
                 </form>
-                <div class="admin-list" id="teachers-list" aria-live="polite"></div>
+                <div class="admin-card table-card">
+                    <h3>Docentes registrados</h3>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table" id="tabla-docentes">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Identificador</th>
+                                    <th scope="col">DUI</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Especialidad</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
 
             <section class="content-view" id="view-encargados" aria-labelledby="title-encargados" hidden>
                 <h2 id="title-encargados">Encargados</h2>
-                <p class="admin-intro">Vista de demostración para la administración de encargados.</p>
                 <div class="section-rule" aria-hidden="true"></div>
-                <div class="admin-list" id="guardians-list" aria-live="polite"></div>
+                <div class="admin-card table-card">
+                    <h3>Encargados registrados</h3>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table" id="tabla-encargados">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Identificador</th>
+                                    <th scope="col">DUI</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Teléfono</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
 
             <section class="content-view" id="view-secciones" aria-labelledby="title-secciones" hidden>
                 <h2 id="title-secciones">Secciones</h2>
-                <p class="admin-intro">Vista de demostración para la administración de secciones.</p>
                 <div class="section-rule" aria-hidden="true"></div>
-                <div class="admin-list" id="sections-list" aria-live="polite"></div>
+                <form class="admin-card section-create-form" id="section-create-form" data-api-form>
+                    <h3>Crear sección</h3>
+                    <div class="teacher-form-fields">
+                        <label>
+                            Nombre de sección
+                            <input name="nombre_seccion" maxlength="100" required>
+                        </label>
+                        <label>
+                            Año
+                            <select id="select-anio" name="id_anio" required>
+                                <option value="" selected>Seleccione el año...</option>
+                            </select>
+                        </label>
+                        <label>
+                            DUI de Docente Guía
+                            <select id="select-docente-guia" name="dui_docente_guia" required>
+                                <option value="" selected>Seleccione un docente guía...</option>
+                            </select>
+                        </label>
+                    </div>
+                    <button class="teacher-create-button" type="submit">Crear sección</button>
+                    <p class="teacher-create-status" id="section-create-status" role="status" aria-live="polite"></p>
+                </form>
+                <div class="admin-card table-card">
+                    <h3>Secciones registradas</h3>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table" id="tabla-secciones">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Sección</th>
+                                    <th scope="col">Año</th>
+                                    <th scope="col">Docente Guía</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
 
             <section class="content-view active" id="view-solicitudes" aria-labelledby="title-solicitudes">
                 <h2 id="title-solicitudes">Solicitudes de matrícula</h2>
-                <p class="admin-intro">Vista de demostración para revisar solicitudes.</p>
                 <div class="section-rule" aria-hidden="true"></div>
-                <p class="admin-status" id="admin-status" role="status" aria-live="polite">La información aparecerá en esta sección.</p>
-                <div class="admin-list" id="applications-list"></div>
+                <div class="admin-card table-card">
+                    <h3>Alumnos registrados</h3>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table" id="tabla-alumnos">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Identificador</th>
+                                    <th scope="col">NIE</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Sección</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
@@ -110,5 +202,6 @@
         verificarSesion('Administrador');
     </script>
     <script src="JS/portal_navigation.js"></script>
+    <script src="JS/panel_admin.js"></script>
 </body>
 </html>
